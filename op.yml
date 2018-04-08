@@ -1,0 +1,32 @@
+name: github.com/opspec-pkgs/semver.v2.parse
+description: parses a [v2 semantic version](https://semver.org/spec/v2.0.0.html)
+version: 1.0.0
+opspec: 0.1.6
+inputs:
+  semVer:
+    string:
+      description: the [v2 semantic version](https://semver.org/spec/v2.0.0.html) to parse
+outputs:
+  semVer:
+    object:
+      constraints:
+        properties:
+          major:
+            type: integer
+          minor:
+            type: integer
+          patch:
+            type: integer
+          pre:
+            type: array
+        required: [major, minor, patch]
+      description: the parsed [v2 semantic version](https://semver.org/spec/v2.0.0.html)
+run:
+  container:
+    image: { ref: 'opspecpkgs/semver.v2.parse:1.0.0' }
+    cmd: [node, /cmd.js]
+    envVars:
+      semVer:
+    files:
+      /semVer: $(semVer)
+      /cmd.js:
